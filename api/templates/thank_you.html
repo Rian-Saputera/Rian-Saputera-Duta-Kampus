@@ -1,0 +1,15 @@
+<!-- templates/thank_you.html -->
+{% extends 'base.html' %} {% block content %}
+<section class="thank-section fade-in">
+  <div class="thank-card">
+    <h2>Terima kasih sudah memilih!</h2>
+    <p>Suara kamu sudah terekam. Lihat hasil voting untuk statistik terbaru.</p>
+    <div class="actions">
+      <a href="{{ url_for('results') }}" class="btn-primary">Lihat Hasil</a>
+      <a href="{{ url_for('index') }}" class="btn-outline"
+        >Kembali ke Beranda</a
+      >
+    </div>
+  </div>
+</section>
+{% endblock %}

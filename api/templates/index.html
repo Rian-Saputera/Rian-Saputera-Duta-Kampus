@@ -1,0 +1,39 @@
+<!-- templates/index.html -->
+{% extends 'base.html' %} {% block content %}
+<section class="hero fade-in">
+  <h2>Pilih Duta Kampus Favoritmu</h2>
+  <p>Suaramu menentukan wajah kampus kita. Satu suara per akun.</p>
+</section>
+
+<section class="vote-section">
+  <div class="cards-grid">
+    {% for c in candidates %}
+    <div class="card lift-in">
+      <img src="{{ c.photo_url }}" alt="{{ c.name }}" class="card-photo" />
+      <div class="card-content">
+        <h3>{{ c.name }}</h3>
+        <p class="muted">{{ c.major }}</p>
+        <button class="btn-primary" data-candidate="{{ c.id }}">Pilih</button>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% if not current_user.is_authenticated %}
+  <div class="login-nudge">
+    <p>Silakan login untuk memberikan suara.</p>
+    <a href="{{ url_for('login') }}" class="btn-outline">Login</a>
+  </div>
+  {% endif %}
+</section>
+
+<section class="sponsor-section fade-in">
+  <h2>Sponsor</h2>
+  <div class="sponsor-track">
+    {% for s in sponsors %}
+    <div class="sponsor-item">
+      <img src="{{ s.logo_url }}" alt="{{ s.name }}" />
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

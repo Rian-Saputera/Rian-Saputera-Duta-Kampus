@@ -1,0 +1,55 @@
+<!-- templates/results.html -->
+{% extends 'base.html' %} {% block content %}
+<section class="results-section fade-in">
+  <h2>Statistika Hasil Voting</h2>
+  <div class="results-grid">
+    <div class="chart-card">
+      <canvas id="voteChart" height="160"></canvas>
+    </div>
+    <div class="leader-card lift-in">
+      <h3>Kandidat Terfavorit</h3>
+      {% if top %}
+      <img
+        src="{{ top.photo_url }}"
+        alt="{{ top.name }}"
+        class="leader-photo"
+      />
+      <p class="leader-name">{{ top.name }}</p>
+      <p class="muted">{{ top.major }}</p>
+      {% else %}
+      <p>Belum ada data.</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<script>
+  const labels = [
+    {% for v in votes %}'{{ v[1] }}',{% endfor %}
+  ];
+  const dataCounts = [
+    {% for v in votes %}{{ v[2] }},{% endfor %}
+  ];
+  const ctx = document.getElementById('voteChart');
+  if (ctx) {
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+          label: 'Jumlah Suara',
+          data: dataCounts,
+          backgroundColor: ['#0b5cff', '#22c55e', '#ef4444', '#f59e0b', '#8b5cf6']
+        }]
+      },
+      options: {
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { beginAtZero: true, grid: { color: '#eee' } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+  }
+</script>
+{% endblock %}
